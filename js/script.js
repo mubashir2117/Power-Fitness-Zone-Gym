@@ -114,6 +114,86 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => revealObserver.observe(el));
 
+  // ===== PREMIUM CARD ANIMATIONS =====
+  const isDesktop = window.matchMedia('(min-width: 769px)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const cardSelectors = [
+    '.why-card', '.program-card', '.trainer-card',
+    '.pricing-card', '.gallery-item', '.social-card', '.review-card'
+  ];
+
+  const allCards = document.querySelectorAll(cardSelectors.join(', '));
+
+  // Apply classes: .animated-card (base), .card-hover (hover), .reveal-card (scroll), .card-image (images)
+  allCards.forEach(card => {
+    card.classList.add('animated-card', 'card-hover', 'reveal-card');
+
+    // Mark image containers
+    const imgWrap = card.querySelector('.program-img, .trainer-img');
+    if (imgWrap) imgWrap.classList.add('card-image');
+    // Gallery items themselves are image containers
+    if (card.classList.contains('gallery-item')) card.classList.add('card-image');
+  });
+
+  // IntersectionObserver for .reveal-card (stagger is handled via CSS transition-delay)
+  const revealCards = document.querySelectorAll('.reveal-card');
+  const revealCardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        revealCardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealCards.forEach(el => revealCardObserver.observe(el));
+
+  // Mouse-tracking subtle 3D tilt (desktop only, respects reduced motion)
+  if (isDesktop && !prefersReducedMotion) {
+    allCards.forEach(card => {
+      let tiltRaf = null;
+
+      card.addEventListener('mousemove', (e) => {
+        if (tiltRaf) cancelAnimationFrame(tiltRaf);
+        tiltRaf = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          // Subtle tilt: max 3 degrees
+          const tiltX = (0.5 - y) * 3;
+          const tiltY = (x - 0.5) * 3;
+          // Determine base transform from hover state
+          const isHover = card.matches(':hover');
+          const liftY = isHover ? -8 : 0;
+          const scaleVal = isHover ? 1.02 : 1;
+          card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(${liftY}px) scale(${scaleVal})`;
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (tiltRaf) cancelAnimationFrame(tiltRaf);
+        card.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+        setTimeout(() => { card.style.transition = ''; }, 500);
+      });
+    });
+  }
+
+  // Mobile: simple tap feedback (no hover/tilt needed)
+  if (!isDesktop && !prefersReducedMotion) {
+    allCards.forEach(card => {
+      card.addEventListener('touchstart', () => {
+        card.style.transform = 'scale(0.98)';
+        card.style.transition = 'transform 0.15s ease';
+      }, { passive: true });
+
+      card.addEventListener('touchend', () => {
+        card.style.transform = '';
+        setTimeout(() => { card.style.transition = ''; }, 200);
+      }, { passive: true });
+    });
+  }
+
   // Animated counters
   const stats = document.querySelectorAll('.stat-number');
   const statsObserver = new IntersectionObserver((entries) => {

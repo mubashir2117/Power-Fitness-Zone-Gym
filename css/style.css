@@ -477,13 +477,12 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 .why-card {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 36px 28px;
-  transition: var(--transition);
+  transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .why-card:hover {
   border-color: var(--border-hover);
-  transform: translateY(-6px);
   background: var(--bg-card-hover);
-  box-shadow: var(--shadow);
 }
 .why-icon {
   width: 56px; height: 56px; border-radius: 14px;
@@ -501,12 +500,12 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 .program-card {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); overflow: hidden;
-  transition: var(--transition);
+  transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.program-card:hover { border-color: var(--border-hover); transform: translateY(-6px); box-shadow: var(--shadow); }
+.program-card:hover { border-color: var(--border-hover); }
 .program-img { position: relative; height: 220px; overflow: hidden; }
-.program-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-.program-card:hover .program-img img { transform: scale(1.08); }
+.program-img img { width: 100%; height: 100%; object-fit: cover; }
 .program-icon {
   position: absolute; top: 16px; right: 16px;
   width: 44px; height: 44px; border-radius: 12px;
@@ -529,12 +528,12 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 .trainer-card {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); overflow: hidden;
-  transition: var(--transition);
+  transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.trainer-card:hover { border-color: var(--border-hover); transform: translateY(-6px); }
+.trainer-card:hover { border-color: var(--border-hover); }
 .trainer-img { height: 280px; overflow: hidden; }
-.trainer-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-.trainer-card:hover .trainer-img img { transform: scale(1.05); }
+.trainer-img img { width: 100%; height: 100%; object-fit: cover; }
 .trainer-info { padding: 24px; }
 .trainer-info h3 { font-size: 1.25rem; margin-bottom: 4px; }
 .trainer-specialty { display: block; color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-bottom: 12px; }
@@ -558,7 +557,7 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 }
 .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
 .gallery-item:nth-child(4) { grid-row: span 2; }
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 .gallery-item:hover img { transform: scale(1.08); }
 .gallery-overlay {
   position: absolute; inset: 0;
@@ -596,9 +595,11 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 .pricing-card {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 40px 32px;
-  text-align: center; position: relative; transition: var(--transition);
+  text-align: center; position: relative;
+  transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.pricing-card:hover { border-color: var(--border-hover); transform: translateY(-6px); }
+.pricing-card:hover { border-color: var(--border-hover); }
 .pricing-popular {
   border-color: var(--accent);
   background: linear-gradient(180deg, rgba(200,255,0,0.06) 0%, var(--bg-card) 40%);
@@ -698,10 +699,11 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 .social-card {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 40px 24px; text-align: center;
-  transition: var(--transition);
+  transition: border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .social-card:hover {
-  border-color: var(--accent); transform: translateY(-6px);
+  border-color: var(--accent);
   background: var(--bg-card-hover);
 }
 .social-card i { font-size: 2.4rem; color: var(--accent); margin-bottom: 16px; }
@@ -776,6 +778,241 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== PREMIUM CARD ANIMATIONS ===== */
+
+/* --- Staggered scroll reveal for card grids (100ms increments) --- */
+.why-grid .reveal-card:nth-child(1) { transition-delay: 0ms; }
+.why-grid .reveal-card:nth-child(2) { transition-delay: 100ms; }
+.why-grid .reveal-card:nth-child(3) { transition-delay: 200ms; }
+.why-grid .reveal-card:nth-child(4) { transition-delay: 300ms; }
+.why-grid .reveal-card:nth-child(5) { transition-delay: 400ms; }
+.why-grid .reveal-card:nth-child(6) { transition-delay: 500ms; }
+
+.programs-grid .reveal-card:nth-child(1) { transition-delay: 0ms; }
+.programs-grid .reveal-card:nth-child(2) { transition-delay: 100ms; }
+.programs-grid .reveal-card:nth-child(3) { transition-delay: 200ms; }
+.programs-grid .reveal-card:nth-child(4) { transition-delay: 300ms; }
+.programs-grid .reveal-card:nth-child(5) { transition-delay: 400ms; }
+.programs-grid .reveal-card:nth-child(6) { transition-delay: 500ms; }
+
+.trainers-grid .reveal-card:nth-child(1) { transition-delay: 0ms; }
+.trainers-grid .reveal-card:nth-child(2) { transition-delay: 100ms; }
+.trainers-grid .reveal-card:nth-child(3) { transition-delay: 200ms; }
+
+.pricing-grid .reveal-card:nth-child(1) { transition-delay: 0ms; }
+.pricing-grid .reveal-card:nth-child(2) { transition-delay: 100ms; }
+.pricing-grid .reveal-card:nth-child(3) { transition-delay: 200ms; }
+
+.gallery-grid .reveal-card:nth-child(1) { transition-delay: 0ms; }
+.gallery-grid .reveal-card:nth-child(2) { transition-delay: 100ms; }
+.gallery-grid .reveal-card:nth-child(3) { transition-delay: 200ms; }
+.gallery-grid .reveal-card:nth-child(4) { transition-delay: 300ms; }
+.gallery-grid .reveal-card:nth-child(5) { transition-delay: 400ms; }
+.gallery-grid .reveal-card:nth-child(6) { transition-delay: 500ms; }
+.gallery-grid .reveal-card:nth-child(7) { transition-delay: 600ms; }
+.gallery-grid .reveal-card:nth-child(8) { transition-delay: 700ms; }
+
+.social-grid .reveal-card:nth-child(1) { transition-delay: 0ms; }
+.social-grid .reveal-card:nth-child(2) { transition-delay: 100ms; }
+.social-grid .reveal-card:nth-child(3) { transition-delay: 200ms; }
+
+/* --- .reveal-card: scroll-triggered entrance --- */
+.reveal-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.reveal-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- .animated-card: base (perspective + will-change, no visible effect) --- */
+.animated-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* --- .card-hover: smooth lift + scale + premium shadow on hover --- */
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(200, 255, 0, 0.06);
+}
+
+/* Pricing popular card extra emphasis */
+.pricing-popular.card-hover:hover {
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(200, 255, 0, 0.2),
+    0 0 32px -6px rgba(200, 255, 0, 0.12);
+}
+
+/* Pricing popular card hover z-index */
+.pricing-card.card-hover:hover { z-index: 2; }
+
+/* --- .card-image: image zoom on card hover --- */
+.card-image {
+  overflow: hidden;
+}
+.card-image img {
+  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+.card-hover:hover .card-image img {
+  transform: scale(1.05);
+}
+
+/* --- Subtle 3D tilt is applied via JS (max 3deg) --- */
+
+/* --- Icon transitions (scale up slightly on card hover) --- */
+.why-icon,
+.program-icon,
+.pricing-features i,
+.trainer-social a,
+.gallery-overlay i,
+.social-card > i {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.card-hover:hover .why-icon,
+.card-hover:hover .program-icon {
+  transform: scale(1.08);
+}
+.card-hover:hover .pricing-features i {
+  transform: scale(1.12);
+}
+.card-hover:hover .trainer-social a {
+  transform: translateY(-2px) scale(1.06);
+}
+.card-hover:hover .gallery-overlay i {
+  transform: scale(1.1);
+}
+.card-hover:hover .social-card > i {
+  transform: scale(1.08);
+}
+
+/* --- Content transitions (heading, description) --- */
+.program-content h3,
+.why-card h3,
+.trainer-info h3,
+.trainer-info .trainer-specialty,
+.pricing-card h3,
+.social-card h3 {
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.program-content p,
+.why-card p,
+.social-card span {
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-hover:hover .program-content h3,
+.card-hover:hover .why-card h3,
+.card-hover:hover .trainer-info h3,
+.card-hover:hover .pricing-card h3,
+.card-hover:hover .social-card h3 {
+  transform: translateY(-2px);
+}
+.card-hover:hover .program-content p,
+.card-hover:hover .why-card p {
+  transform: translateY(-1px);
+  opacity: 0.88;
+}
+.card-hover:hover .trainer-info .trainer-specialty {
+  transform: translateY(-1px);
+}
+.card-hover:hover .social-card span {
+  opacity: 0.72;
+}
+
+/* --- Program link arrow slide --- */
+.program-link i {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.card-hover:hover .program-link i {
+  transform: translateX(4px);
+}
+
+/* --- Popular badge glow --- */
+.pricing-popular .popular-badge {
+  transition: box-shadow 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.pricing-popular.card-hover:hover .popular-badge {
+  box-shadow: 0 0 20px rgba(200, 255, 0, 0.35);
+}
+
+/* ===== ACCESSIBILITY - Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .animated-card,
+  .animated-card *,
+  .reveal-card {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animated-card {
+    transform-style: flat !important;
+  }
+
+  .animated-card:hover,
+  .card-hover:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .reveal-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .card-hover:hover .card-image img {
+    transform: none !important;
+  }
+
+  .card-hover:hover .why-icon,
+  .card-hover:hover .program-icon,
+  .card-hover:hover .pricing-features i,
+  .card-hover:hover .trainer-social a,
+  .card-hover:hover .gallery-overlay i,
+  .card-hover:hover .social-card > i,
+  .card-hover:hover .program-link i {
+    transform: none !important;
+  }
+
+  .card-hover:hover .program-content h3,
+  .card-hover:hover .why-card h3,
+  .card-hover:hover .trainer-info h3,
+  .card-hover:hover .pricing-card h3,
+  .card-hover:hover .social-card h3,
+  .card-hover:hover .program-content p,
+  .card-hover:hover .why-card p,
+  .card-hover:hover .trainer-info .trainer-specialty,
+  .card-hover:hover .social-card span {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .why-grid .reveal-card,
+  .programs-grid .reveal-card,
+  .trainers-grid .reveal-card,
+  .pricing-grid .reveal-card,
+  .gallery-grid .reveal-card,
+  .social-grid .reveal-card {
+    transition-delay: 0ms !important;
+  }
+
+  .why-card, .program-card, .trainer-card, .pricing-card, .gallery-item, .social-card, .review-card {
+    transition: border-color 0.2s ease, background 0.2s ease !important;
+  }
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
@@ -896,6 +1133,73 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
   .hero-label { font-size: 0.7rem; letter-spacing: 0.12em; margin-bottom: 14px; }
   .hero-rating { font-size: 0.85rem; }
   .scroll-down { bottom: 24px; }
+
+  /* Mobile: disable all premium effects, use subtle tap states */
+  .animated-card {
+    transform-style: flat !important;
+  }
+  .card-hover:hover,
+  .animated-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: var(--border) !important;
+  }
+
+  /* Tap/active states */
+  .why-card:active,
+  .program-card:active,
+  .trainer-card:active,
+  .pricing-card:active,
+  .gallery-item:active,
+  .social-card:active {
+    transform: scale(0.98);
+    transition: transform 0.15s ease;
+  }
+
+  /* Disable stagger delays on mobile */
+  .why-grid .reveal-card,
+  .programs-grid .reveal-card,
+  .trainers-grid .reveal-card,
+  .pricing-grid .reveal-card,
+  .gallery-grid .reveal-card,
+  .social-grid .reveal-card {
+    transition-delay: 0ms !important;
+  }
+
+  /* Mobile hover: simple border highlight only */
+  .why-card:hover,
+  .program-card:hover,
+  .trainer-card:hover,
+  .pricing-card:hover,
+  .gallery-item:hover,
+  .social-card:hover {
+    border-color: var(--border-hover);
+  }
+
+  /* Disable icon/content animations on mobile */
+  .card-hover:hover .why-icon,
+  .card-hover:hover .program-icon,
+  .card-hover:hover .pricing-features i,
+  .card-hover:hover .trainer-social a,
+  .card-hover:hover .gallery-overlay i,
+  .card-hover:hover .social-card > i,
+  .card-hover:hover .program-link i,
+  .card-hover:hover .program-content h3,
+  .card-hover:hover .why-card h3,
+  .card-hover:hover .trainer-info h3,
+  .card-hover:hover .pricing-card h3,
+  .card-hover:hover .social-card h3,
+  .card-hover:hover .program-content p,
+  .card-hover:hover .why-card p,
+  .card-hover:hover .trainer-info .trainer-specialty,
+  .card-hover:hover .social-card span {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .card-hover:hover .card-image img {
+    transform: none !important;
+  }
 }
 
 @media (max-width: 480px) {
